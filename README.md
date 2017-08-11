@@ -56,16 +56,21 @@ The Algorithm is written in Ruby and assumes a hash as input in the following fo
 Additionally, the top `n` can be specified as the first argument in the form of an integer.
 
 ```ruby
-top(5, hash)
+find_top(5, hash)
 ```
 
-Note: The submitted algorithm is probably not reflective of the way I would actually produce a list of 'Top 5 Makes/Models' in each category.
+Note: The following code assumes an initial query to the database for all categories. This is represented as `Category.all`. It is also assumed that each `Category` object has a `vehicles` method which returns an array of `Vehicle` objects.
 
-In reality, I would add a `rank` column to the `vehicles` table, update the `rank` column with the following code:
+The `top_n_rentals`, `consolidate_bookings`, and `vehicle_hash_setup` methods are used for generating a properly structured hash as indicated above. The main sorting/ranking algorithm is found in the `find_top` method.
 
 ```ruby
-#assume categories is a queried array of category objects/records 
-#each with a vehicles method that retrieves an array of vehicles
+def top_n_rentals(n=5)
+  models_in_categories = consolidate_bookings(Category.all)
+
+
+  return find_top(n, models_in_categories)
+
+end
 
 def consolidate_bookings(categories)
     
@@ -97,7 +102,80 @@ def vehicle_hash_setup
   end
 
 end
+
+def find_top(n = 5, cats_hash)
+  hash = {}
+
+  cats_hash.each do |cat, make_hash|
+    hash[cat] = []
+
+    make_hash.each do |make, model_hash|
+      model_hash.each do |model, bookings|
+
+        if hash[cat].empty?
+          hash[cat] << {make => {model => bookings}}
+        else
+          l_index = 0
+          h_index = hash[cat].length - 1
+
+          while true do
+            highest_count  = extract_booking_count(hash[cat].first)
+            lowest_count   = extract_booking_count(hash[cat].last)
+            
+            if bookings >= highest_count
+              hash[cat].unshift({make => {model => bookings}})
+              break
+            elsif bookings < lowest_count
+              hash[cat].push({make => {model => bookings}})
+              break
+            else
+              i = (l_index + h_index) / 2
+              mid_count = extract_booking_count(hash[cat][i])
+
+              if bookings >= mid_count
+                i > 0 ? index = i : index = 0
+                adjacent_more = extract_booking_count(hash[cat][index])
+
+                if adjacent_more <= bookings
+                  hash[cat].insert(i, {make => {model => bookings}})
+                  break
+                else
+                  h_index = i
+                end
+
+              else
+                i < hash[cat].length - 1 ? index = i + 1 : index = i
+                adjacent_less = extract_booking_count(hash[cat][index])
+
+                if adjacent_less < bookings
+                  hash[cat].insert(i + 1, {make => {model => bookings}})
+                  break
+                else
+                  l_index = i
+                end
+              end 
+            end      
+          end
+        end  
+      end
+    end
+    
+    hash[cat] = hash[cat].first(n)
+  end 
+  
+  return hash
+end
+
+def extract_booking_count(hash)
+  # expects hash => {"make" => {"model" => n}}
+  make = hash.keys[0]
+  model = hash[make].keys[0]
+
+  hash[make][model]
+end 
 ```
+
+A ruby fiddle can be found [here](http://rubyfiddle.com/riddles/26441).
 
 
 

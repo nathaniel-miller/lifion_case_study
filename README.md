@@ -2,11 +2,10 @@
 Note: The following answers assume the use of PostgresQL
 
 #### Data Modeling
-The ERD can be downloaded in PDF format from:
-[https://www.lucidchart.com/publicSegments/view/5063a6c5-b8af-4f4c-8fc9-b3dc94cf984c](https://www.lucidchart.com/publicSegments/view/5063a6c5-b8af-4f4c-8fc9-b3dc94cf984c)
+The ERD can be downloaded in PDF format from [here](https://www.lucidchart.com/publicSegments/view/5063a6c5-b8af-4f4c-8fc9-b3dc94cf984c)
 
 #### Query
-Based on your datamodel please compose a query listing all Rental Vehicles which are available on the indicated Start and End Dates.
+> Based on your datamodel please compose a query listing all Rental Vehicles > which are available on the indicated Start and End Dates.
 
 The following query returns the vehicles that are available on the specified beginning and end dates.
 

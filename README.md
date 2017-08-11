@@ -1,11 +1,13 @@
-### Lifion Case Study
+## Lifion Case Study
 Note: The following answers assume the use of PostgresQL
 
 #### Data Modeling
-The ERD can be downloaded in PDF format from [here](https://www.lucidchart.com/publicSegments/view/5063a6c5-b8af-4f4c-8fc9-b3dc94cf984c)
+> Given the above requirements please create a data model in the form of a complete physical entity relationship diagram (ERD). Your diagram should be comprehensive and sufficient for creating a relational database schema that will support the applications’ requirements.
+
+The ERD can be downloaded in PDF format from [here](https://www.lucidchart.com/publicSegments/view/f076239c-31f1-465d-aeb1-07cae297c933).
 
 #### Query
-> Based on your datamodel please compose a query listing all Rental Vehicles > which are available on the indicated Start and End Dates.
+> Based on your datamodel please compose a query listing all Rental Vehicles which are available on the indicated Start and End Dates.
 
 The following query returns the vehicles that are available on the specified beginning and end dates.
 
@@ -21,7 +23,7 @@ The above query does not, however, account for the vehicle being unavailable for
 SELECT * FROM vehicles
 WHERE NOT daterange('2017-08-12', '2017-08-14')  @> ANY (dates_booked);
 ```
-A fiddle can be found here:(http://sqlfiddle.com/#!17/21d3a/1)[http://sqlfiddle.com/#!17/21d3a/1]
+A fiddle can be found [here](http://sqlfiddle.com/#!17/21d3a/1).
 
 #### Algorithm
 

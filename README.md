@@ -23,7 +23,7 @@ The above query does not, however, account for the vehicle being unavailable for
 SELECT * FROM vehicles
 WHERE NOT daterange('2017-08-12', '2017-08-14')  @> ANY (dates_booked);
 ```
-A fiddle can be found [here](http://sqlfiddle.com/#!17/21d3a/1).
+A fiddle can be found [here](http://sqlfiddle.com/#!17/21d3a/2).
 
 #### Algorithm
 

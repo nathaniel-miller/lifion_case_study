@@ -287,10 +287,3 @@ puts get_top_models(5,{
 ```
 
 A ruby fiddle can be found [here](http://rubyfiddle.com/riddles/26441).
-
-
-
-
-
-
-

@@ -56,12 +56,48 @@ The Algorithm is written in Ruby and assumes a hash as input in the following fo
 Additionally, the top `n` can be specified as the first argument in the form of an integer.
 
 ```ruby
-find_top(5, hash)
+get_top_models(5, rentals_hash)
 ```
 
 Note: The following code assumes an initial query to the database for all categories. This is represented as `Category.all`. It is also assumed that each `Category` object has a `vehicles` method which returns an array of `Vehicle` objects.
 
-The `top_n_rentals`, `consolidate_bookings`, and `vehicle_hash_setup` methods are used for generating a properly structured hash as indicated above. The main sorting/ranking algorithm is found in the `find_top` method.
+The `top_n_rentals`, `consolidate_bookings`, and `vehicle_hash_setup` methods are used for generating a properly structured hash as indicated above. 
+
+```ruby
+def top_n_rentals(n)
+  cat_hash = consolidate_bookings(Category.all)
+  
+  return get_top_models(cat_hash, n)
+end
+
+def consolidate_bookings(categories)   
+  all_bookings = {}
+
+  categories.each do |cat|
+    cat_bookings = vehicle_hash_setup()
+
+    cat.vehicles.each do |v|
+      cat_bookings[v.make][v.model] += v.dates_booked.count
+    end
+
+    all_bookings[cat.name] = cat_bookings
+  end
+
+  all_bookings
+end
+
+def vehicle_hash_setup
+
+  Hash.new do |make_hash, make|
+    make_hash[make] = Hash.new do |model_hash, model|
+      model_hash[model] = 0
+    end  
+  end
+
+end
+```
+
+The main sorting/ranking algorithm begins by taking the structured data and iterating through the data with the `manage_` functions.
 
 ```ruby
 def get_top_models(n = 5, cat_hash)
@@ -110,7 +146,11 @@ def manage_models(data)
 
   return data
 end
+```
 
+The heart of the actual algorithm resides in the `pre_sort_data`, `sort_extreme`, and `sort_midrange` functions.
+
+```ruby
 def pre_sort_data(data)
   sorted_cats = data[:sorted][data[:current_cat]]
 
@@ -193,8 +233,11 @@ def extract_booking_count(hash)
   model = hash[make].keys[0]
 
   hash[make][model]
-end  
+end
+```
+A call to `get_top_modles` with data structured in the manner below will result in an hash of categories, each pointed to an array sorted from most popular to least popular. 
 
+```ruby
 puts get_top_models(5,{
   'car' => {
     "ford"=>{

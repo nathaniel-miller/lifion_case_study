@@ -265,8 +265,7 @@ puts get_top_models(5,{
       "moving van" => 101
     }
   }  
-  }
-)
+})
 ```
 ```ruby
 {

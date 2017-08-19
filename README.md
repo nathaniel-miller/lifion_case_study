@@ -73,18 +73,18 @@ def top_n_models_for_cat(n)
   data = {}
 
   Category.all.each do |cat|
-    data[cat.name] = sort_modles(cat.models).first(n)
+    data[cat.name] = sort_models(cat.models).first(n)
   end
 
   return data
 end
 ```
 
-The main sorting algorithm begins in the `sort_models` method, taking in the array of models. It then implements a merge sort, first breaking the array down into single element arrays and the calling `merge_modles` to merge the arrays, greatest to least.
+The main sorting algorithm begins in the `sort_models` method, taking in the array of models. It then implements a merge sort, first breaking the array down into single element arrays and the calling `merge_models` to merge the arrays, greatest to least.
 
 ```ruby
 def merge_sort(array)
-  return array if array.length === 1
+  return array if array.length == 1
 
   mid = array.length / 2
 

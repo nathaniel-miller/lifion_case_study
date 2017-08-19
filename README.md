@@ -58,7 +58,7 @@ SELECT * FROM categories;
 This is then represented by `Category.all`.
 
 ```ruby
-[#<Category:0x00000004d07a60 id: 2, name: "truck">
+#[<Category:0x00000004d07a60 id: 2, name: "truck">
 #<Category:0x00000004d078f8 id: 1, name: "car"]
 ```
 

@@ -64,9 +64,9 @@ This is then represented by `Category.all`.
 
 Additionally, the top `n` modles can be specified as the first argument in the form of an integer.
 
-Note: The following code assumes that each `Category` object has a `models` method which returns an array of `Model` objects.
-
 For every category, the name attribute is used as a key in a `data` hash. This key points to the sorted array of top `n` models.
+
+Note: The following code assumes that each `Category` object has a `models` method which returns an array of `Model` objects.
 
 ```ruby
 def top_n_models_for_cat(n)

@@ -116,4 +116,6 @@ end
 
 A ruby fiddle can be found [here](https://repl.it/KQQH/0).
 
-Additional: Implementation with Quicksort [here](https://repl.it/KRFR/0).
+### Additional
+Implementation with Quicksort [here](https://repl.it/KRFR/1).
+Implementation with Insertion Sort [here](https://repl.it/KRJ1/1).
